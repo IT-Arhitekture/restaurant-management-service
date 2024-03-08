@@ -28,3 +28,6 @@ HELP.md
 
 .gradle/
 .idea/
+.DS_Store
+*.bin
+*.properties
