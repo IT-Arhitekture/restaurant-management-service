@@ -3,6 +3,9 @@ package com.itarhitekture.restaurantmanagementservice.controller;
 import com.itarhitekture.restaurantmanagementservice.dto.RestaurantDTO;
 import com.itarhitekture.restaurantmanagementservice.service.RestaurantService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,19 +42,26 @@ public class RestaurantController {
     public ResponseEntity<RestaurantDTO> getRestaurantById(@PathVariable String id){
         RestaurantDTO restaurantDTO = restaurantService.getRestaurantById(id);
         if (restaurantDTO != null) {
+            LOGGER.info("[GET] - /restaurants/", id);
             return ResponseEntity.ok(restaurantDTO);
         } else {
+            LOGGER.warn("[GET] - /restaurants/", id,": No restaurant found !");
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public RestaurantDTO addRestaurant(@RequestBody RestaurantDTO restaurantDTO){
+    @Operation(summary = "Add a new restaurant", description = "Returns the added restaurant")
+    public RestaurantDTO addRestaurant(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Restaurant to be added", required = true, content = @Content(schema = @Schema(implementation = RestaurantDTO.class), examples = @ExampleObject(value = "{\"name\": \"Test Restaurant\", \"address\": \"Test Address\", \"delovniCas\": \"11:00-23:00\"}")))
+            @RequestBody RestaurantDTO restaurantDTO){
+        LOGGER.info("[POST] - /restaurants, Restaurant name: {}", restaurantDTO.getName());
         return restaurantService.addRestaurant(restaurantDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRestaurant(@PathVariable String id){
+        LOGGER.info("[DELETE] - /restaurants/{}", id);
         restaurantService.deleteRestaurant(id);
         return ResponseEntity.noContent().build();
     }

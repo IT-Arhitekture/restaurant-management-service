@@ -18,6 +18,10 @@ public class Restaurant {
         this.delovniCas = delovniCas;
     }
 
+    public Restaurant() {
+
+    }
+
     public String getId() {
         return id;
     }

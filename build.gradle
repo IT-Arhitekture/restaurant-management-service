@@ -19,9 +19,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.3'
+    //implementation 'org.springdoc:springdoc-openapi-ui:1.6.3'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.3.0'
+    testImplementation group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '1.35'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    testImplementation 'org.assertj:assertj-core:3.20.2'
+
 }
 
 tasks.named('test') {
